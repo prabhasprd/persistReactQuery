@@ -20,11 +20,13 @@ let BooksController = class BooksController {
     constructor(booksService) {
         this.booksService = booksService;
     }
-    async getBooks() {
+    async getBooks(req) {
+        console.log("Request =>", req.headers);
         const books = await this.booksService.getAllBook();
         return books;
     }
     async getBook(bookID) {
+        console.log("bookID", bookID);
         const book = await this.booksService.getBookDetails(bookID);
         return book;
     }
@@ -39,15 +41,16 @@ let BooksController = class BooksController {
 };
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "getBooks", null);
 __decorate([
-    (0, common_1.Get)(':bookID'),
-    __param(0, (0, common_1.Param)('bookID')),
+    (0, common_1.Get)("books1"),
+    __param(0, (0, common_1.Query)("bookID")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "getBook", null);
 __decorate([
@@ -65,7 +68,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "deleteBook", null);
 BooksController = __decorate([
-    (0, common_1.Controller)('books'),
+    (0, common_1.Controller)("books"),
     __metadata("design:paramtypes", [books_service_1.BooksService])
 ], BooksController);
 exports.BooksController = BooksController;
