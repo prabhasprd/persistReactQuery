@@ -9,7 +9,7 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     private jwtService: JwtService
-  ) {}
+  ) { }
 
   @Get("getallusers")
   @UseGuards(TokenAuthGuard)

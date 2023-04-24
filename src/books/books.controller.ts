@@ -7,33 +7,36 @@ import {
   Query,
   Delete,
   Request,
+  UseGuards,
 } from "@nestjs/common";
 import { BooksService } from "./books.service";
 import { CreateBookDTO } from "../books/dto/create-book.dto";
+import { TokenAuthGuard } from "src/authGuard/token.guard";
 
-@Controller("books")
+@Controller("book")
 export class BooksController {
-  constructor(private booksService: BooksService) {}
+  constructor(private booksService: BooksService) { }
 
   @Get()
-  async getBooks(@Request() req) {
-    console.log("Request =>", req.headers);
+  @UseGuards(TokenAuthGuard)
+  async getBooks() {
     const books = await this.booksService.getAllBook();
     return books;
   }
-  @Get("books1")
+  @Get("booksById")
+  @UseGuards(TokenAuthGuard)
   async getBook(@Query("bookID") bookID: Number) {
-    console.log("bookID", bookID);
-
     const book = await this.booksService.getBookDetails(bookID);
     return book;
   }
-  @Post()
+  @Post('addBook')
+  @UseGuards(TokenAuthGuard)
   async addBook(@Body() createBookDTO: CreateBookDTO) {
     const book = await this.booksService.addBook(createBookDTO);
     return book;
   }
-  @Delete()
+  @Delete('deleteBook')
+  @UseGuards(TokenAuthGuard)
   async deleteBook(@Query() query) {
     const books = await this.booksService.deleteBook(query.bookID);
     return books;

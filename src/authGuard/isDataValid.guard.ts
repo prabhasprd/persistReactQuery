@@ -7,8 +7,6 @@ export class IsDataValidGuard implements CanActivate {
     context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    console.log("request", request);
-
     return true;
   }
 }

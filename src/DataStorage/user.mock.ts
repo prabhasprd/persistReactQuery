@@ -31,6 +31,13 @@ export const userData = [
       },
       {
         userId: 5,
+        firstName: "Divyanshu",
+        lastName: "MAc",
+        phoneNumber: "111111111",
+        emailAddress: "divyanshu@gmail.com",
+      },
+      {
+        userId: 6,
         firstName: "jone",
         lastName: "mac",
         phoneNumber: "111111111",

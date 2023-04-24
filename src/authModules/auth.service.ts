@@ -23,8 +23,8 @@ export class AuthService {
   loginWithCredentials(user: any, token: any): Promise<any> {
     return new Promise((resolve) => {
       let currentUserData = {
-        emailAddress: user.emailId,
-        userId: Number(user.userID),
+        emailAddress: user.emailAddress,
+        userId: Number(user.userId),
       };
       let userArray = this.userDetails[0].users;
       let data = userArray.find(
@@ -32,7 +32,6 @@ export class AuthService {
           element.emailAddress === currentUserData.emailAddress &&
           element.userId === currentUserData.userId
       );
-
       if (!Boolean(data)) {
         // resolve({ message: "User Data is not present", status: 404 });
         throw new HttpException(
@@ -55,8 +54,8 @@ export class AuthService {
   authTokenValidate(userData: any) {
     let filterData = this.userDetails[0].users.find(
       (ele) =>
-        ele.userId === Number(userData.userID) &&
-        ele.emailAddress === userData.emailId
+        ele.userId === Number(userData.userId) &&
+        ele.emailAddress === userData.emailAddress
     );
     return filterData;
   }
