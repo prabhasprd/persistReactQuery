@@ -35,7 +35,8 @@ let BooksService = class BooksService {
             if (Boolean(data.length)) {
                 throw new common_1.HttpException("Book already exist !", 409);
             }
-            resolve(this.books.push(book));
+            this.books.push(book);
+            resolve("New book store successfully");
         });
     }
     deleteBook(bookID) {

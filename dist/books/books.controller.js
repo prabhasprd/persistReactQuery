@@ -16,17 +16,16 @@ exports.BooksController = void 0;
 const common_1 = require("@nestjs/common");
 const books_service_1 = require("./books.service");
 const create_book_dto_1 = require("../books/dto/create-book.dto");
+const token_guard_1 = require("../authGuard/token.guard");
 let BooksController = class BooksController {
     constructor(booksService) {
         this.booksService = booksService;
     }
-    async getBooks(req) {
-        console.log("Request =>", req.headers);
+    async getBooks() {
         const books = await this.booksService.getAllBook();
         return books;
     }
     async getBook(bookID) {
-        console.log("bookID", bookID);
         const book = await this.booksService.getBookDetails(bookID);
         return book;
     }
@@ -41,34 +40,37 @@ let BooksController = class BooksController {
 };
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Request)()),
+    (0, common_1.UseGuards)(token_guard_1.TokenAuthGuard),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "getBooks", null);
 __decorate([
-    (0, common_1.Get)("books1"),
+    (0, common_1.Get)("booksById"),
+    (0, common_1.UseGuards)(token_guard_1.TokenAuthGuard),
     __param(0, (0, common_1.Query)("bookID")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "getBook", null);
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)('addBook'),
+    (0, common_1.UseGuards)(token_guard_1.TokenAuthGuard),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_book_dto_1.CreateBookDTO]),
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "addBook", null);
 __decorate([
-    (0, common_1.Delete)(),
+    (0, common_1.Delete)('deleteBook'),
+    (0, common_1.UseGuards)(token_guard_1.TokenAuthGuard),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "deleteBook", null);
 BooksController = __decorate([
-    (0, common_1.Controller)("books"),
+    (0, common_1.Controller)("book"),
     __metadata("design:paramtypes", [books_service_1.BooksService])
 ], BooksController);
 exports.BooksController = BooksController;

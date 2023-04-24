@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Request, UseGuards } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { JwtService } from "@nestjs/jwt";
 import { TokenAuthGuard } from "src/authGuard/token.guard";
@@ -17,9 +17,12 @@ export class AuthController {
     let user = await this.authService.getAllUsers();
     return user;
   }
+  @HttpCode(HttpStatus.OK)
   @UseGuards(IsDataValidGuard)
   @Post("login")
   async login(@Request() req) {
+    console.log('HttpStatus.OK', HttpStatus.OK);
+
     return this.authService.loginWithCredentials(
       req.body,
       this.jwtService.sign(req.body)

@@ -10,12 +10,20 @@ exports.BooksModule = void 0;
 const common_1 = require("@nestjs/common");
 const books_controller_1 = require("./books.controller");
 const books_service_1 = require("./books.service");
+const jwt_1 = require("@nestjs/jwt");
+const jwt_strategy_1 = require("../validation-check/jwt.strategy");
 let BooksModule = class BooksModule {
 };
 BooksModule = __decorate([
     (0, common_1.Module)({
+        imports: [
+            jwt_1.JwtModule.register({
+                secret: "jwtConstants.secret",
+                signOptions: { expiresIn: "60s" },
+            }),
+        ],
         controllers: [books_controller_1.BooksController],
-        providers: [books_service_1.BooksService]
+        providers: [books_service_1.BooksService, jwt_strategy_1.JwtStrategy]
     })
 ], BooksModule);
 exports.BooksModule = BooksModule;
